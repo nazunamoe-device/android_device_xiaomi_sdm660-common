@@ -58,6 +58,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio Feature
 PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.audio.adm.buffering.ms=3 \
     vendor.audio.feature.a2dp_offload.enable=false \
     vendor.audio.feature.afe_proxy.enable=true \
     vendor.audio.feature.anc_headset.enable=true \
