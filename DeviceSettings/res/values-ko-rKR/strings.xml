@@ -41,7 +41,7 @@
     <string name="thermal_profile_title">쓰로틀링 관리</string>
     <string name="thermal_title">쓰로틀링 관리 설정</string>
     <string name="thermal_summary">쓰로틀링 관리 프로필 설정</string>
-    <string name="thermal_dialogTitle">쓰로틀링 관리 프로필을 선택합니다.</string>
+    <string name="thermal_dialogTitle">쓰로틀링 관리 프로필 선택</string>
 
     <!-- Values for Thermal Presets -->
     <string name="thermal_performance">성능 향상</string>
