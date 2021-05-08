@@ -70,6 +70,11 @@ public class DeviceSettings extends PreferenceFragment implements
     public static final String PREF_THERMAL = "thermal";
     public static final String THERMAL_PATH = "/sys/devices/virtual/thermal/thermal_message/sconfig";
 
+    private static final String CATEGORY_HALL_WAKEUP = "hall_wakeup";
+    public static final String PREF_HALL_WAKEUP = "hall";
+    public static final String HALL_WAKEUP_PATH = "/sys/module/hall_e7s/parameters/hall_toggle";
+    public static final String HALL_WAKEUP_PROP = "persist.service.folio_daemon";
+
     private static final String DEVICE_DOZE_PACKAGE_NAME = "com.advanced.settings.doze";
 
     private static final String DEVICE_JASON_PACKAGE_NAME = "org.lineageos.settings.devicex";
@@ -140,6 +145,14 @@ public class DeviceSettings extends PreferenceFragment implements
         mTHERMAL.setValue(FileUtils.getValue(THERMAL_PATH));
         mTHERMAL.setSummary(mTHERMAL.getEntry());
         mTHERMAL.setOnPreferenceChangeListener(this);
+        
+        if (FileUtils.fileWritable(HALL_WAKEUP_PATH)) {
+            SecureSettingSwitchPreference hall = (SecureSettingSwitchPreference) findPreference(PREF_HALL_WAKEUP);
+            hall.setChecked(FileUtils.getValue(HALL_WAKEUP_PATH).equals("Y"));
+            hall.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(CATEGORY_HALL_WAKEUP));
+        }
 
         // Dirac
         boolean enhancerEnabled;
@@ -215,6 +228,11 @@ public class DeviceSettings extends PreferenceFragment implements
                     getContext().startService(new Intent(getContext(), DiracService.class));
                     DiracService.sDiracUtils.setLevel(String.valueOf(value));
                 }
+                break;
+
+            case PREF_HALL_WAKEUP:
+                FileUtils.setValue(HALL_WAKEUP_PATH, (boolean) value ? "Y" : "N");
+                FileUtils.setProp(HALL_WAKEUP_PROP, (boolean) value);
                 break;
 
             case PREF_KEY_FPS_INFO:
