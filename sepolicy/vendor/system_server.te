@@ -1,4 +1,5 @@
 get_prop(system_server, userspace_reboot_exported_prop)
+binder_call(system_server, folio_daemon)
 
 allow system_server blkio_dev:dir search;
 allow system_server sysfs_battery_supply:file rw_file_perms;
